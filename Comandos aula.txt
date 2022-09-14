@@ -1,0 +1,102 @@
+SELECT * FROM tbProduto WHERE NomeProduto = 'Dorflex';
+
+SELECT * FROM tbProduto WHERE NomeProduto LIKE 'D%';
+
+SELECT * FROM tbProduto WHERE NomeProduto LIKE 'Dor%';
+
+SELECT * FROM tbCliente WHERE NomeCliente LIKE 'Lui%';
+
+SELECT * FROM tbCliente WHERE NomeCliente LIKE 'Lui_';
+
+SELECT * FROM tbProduto WHERE PrecoProduto = 15;
+
+SELECT * FROM tbProduto WHERE PrecoProduto >= 15;
+
+SELECT * FROM tbProduto WHERE PrecoProduto <= 15;
+
+SELECT * FROM tbProduto WHERE PrecoProduto <> 15;
+
+SELECT * FROM tbProduto WHERE
+FornecedorProduto = 1 OR FornecedorProduto = 3;
+
+SELECT * FROM tbProduto WHERE 
+FornecedorProduto = 3 AND NomeProduto = 'Dorflex';
+
+SELECT * FROM tbProduto WHERE 
+PrecoProduto BETWEEN 15 AND 20;
+
+SELECT * FROM tbProduto WHERE 
+PrecoProduto >= 15 AND PrecoProduto <= 20;
+
+SELECT * FROM tbProduto WHERE
+NomeProduto NOT IN ('Dorflex', 'Aspirina');
+
+SELECT * FROM tbProduto WHERE
+NomeProduto IN ('Dorflex', 'Aspirina');
+
+--Select - Funções de agregação
+
+SELECT * FROM tbProduto;
+
+SELECT SUM (PrecoProduto) FROM tbProduto;
+
+SELECT AVG (PrecoProduto) FROM tbProduto;
+
+SELECT COUNT (NomeProduto) FROM tbProduto;
+
+SELECT MAX (PrecoProduto) FROM tbProduto;
+
+SELECT MIN (PrecoProduto) FROM tbProduto;
+
+SELECT AVG (PrecoProduto) FROM tbProduto WHERE FornecedorProduto = 1;
+
+--Select - Funções de agregação - HAVING
+
+SELECT AVG (PrecoProduto), FornecedorProduto FROM tbProduto
+GROUP BY FornecedorProduto HAVING AVG (PrecoProduto) > 15;
+
+SELECT AVG (PrecoProduto), FornecedorProduto FROM tbProduto
+GROUP BY FornecedorProduto HAVING COUNT(*) >= 3;
+
+SELECT AVG (PrecoProduto), FornecedorProduto FROM tbProduto
+WHERE FornecedorProduto <> 3
+GROUP BY FornecedorProduto HAVING AVG (PrecoProduto) > 15;
+
+--Select – Ordenando Dados
+
+SELECT NomeProduto, PrecoProduto FROM tbProduto
+ORDER BY NomeProduto ASC;
+
+SELECT * FROM tbProduto ORDER BY NomeProduto ASC;
+
+SELECT * FROM tbProduto ORDER BY NomeProduto DESC;
+
+SELECT * FROM tbProduto ORDER BY NomeProduto;
+
+--Select – Outras Cláusulas e Funções
+
+SELECT ALL PrecoProduto FROM tbProduto;
+
+SELECT DISTINCT PrecoProduto FROM tbProduto;
+
+SELECT CONCAT (NomeProduto, ' custa: ', PrecoProduto)
+AS [Preço dos Produtos] FROM tbProduto;
+
+SELECT TOP 2 * FROM tbVendas;
+
+SELECT TOP 2 * FROM tbVendas ORDER BY DataVenda ASC;
+
+SELECT TOP 2 * FROM tbVendas ORDER BY DataVenda DESC;
+
+SELECT TOP 20 PERCENT * FROM tbCliente;
+
+SELECT CodProduto AS Código,
+NomeProduto AS [Nome do Produto],
+PrecoProduto AS Preço
+FROM tbProduto;
+
+SELECT CodProduto AS Código,
+NomeProduto AS [Nome do Produto],
+PrecoProduto AS Preço,
+'Fornecedores Variados' AS [Fornecedor do Produto]
+FROM tbProduto;

@@ -1,0 +1,99 @@
+USE master
+GO
+
+IF DB_ID (N'bdDrogaFarm') IS NOT NULL
+DROP DATABASE bdDrogaFarm
+ELSE 
+CREATE DATABASE bdDrogaFarm;
+GO
+
+USE bdDrogaFarm
+GO
+-- Criando as tabelas Fornecedor, Produto, Vendas e Cliente
+CREATE TABLE tbFornecedor(
+CodFornecedor INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+NomeFornecedor NVARCHAR (30));
+GO
+
+CREATE TABLE tbProduto(
+CodProduto INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+NomeProduto NVARCHAR (30),
+FornecedorProduto INT NOT NULL FOREIGN KEY REFERENCES tbFornecedor(CodFornecedor),
+PrecoProduto DECIMAL (9,2));
+GO
+
+CREATE TABLE tbCliente(
+CodCliente INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+NomeCliente NVARCHAR (40),
+EmailCliente NVARCHAR (30));
+GO
+
+CREATE TABLE tbVendas(
+CodVendas INT PRIMARY KEY NOT NULL IDENTITY(1,1),
+DataVenda DATE,
+CodCliente INT NOT NULL FOREIGN KEY REFERENCES tbCliente(CodCliente));
+GO
+
+
+CREATE TABLE tbItemVenda(
+CodItemVendas INT PRIMARY KEY NOT NULL IDENTITY(1,1),
+CodVendas INT NOT NULL FOREIGN KEY REFERENCES tbVendas(CodVendas),
+CodProd INT NOT NULL FOREIGN KEY REFERENCES tbProduto(CodProduto),
+QtdaVendida INT NOT NULL);
+GO
+
+CREATE TABLE tbEnviarEmail(
+CodEnviarEmail INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+Destinatario NVARCHAR (50),
+Assunto NVARCHAR (50),
+Corpo NVARCHAR (100));
+GO
+
+-- Inserindo Dados nas Tabelas (e de formas diferentes)
+
+INSERT INTO tbFornecedor (NomeFornecedor) VALUES ('Pzier');
+INSERT INTO tbFornecedor (NomeFornecedor) VALUES ('EMS');
+INSERT INTO tbFornecedor (NomeFornecedor) VALUES ('Ache');
+GO
+
+INSERT INTO tbProduto (NomeProduto,FornecedorProduto,PrecoProduto) VALUES
+('Dipirona',1,15),
+('Dorflex',1,10),
+('Aspirina',2,20),
+('Benegrip',2,20),
+('Neosaldina',2,20),
+('Tylenol',2,20),
+('Tylenol',3,20);
+GO
+
+INSERT INTO tbCliente (NomeCliente, EmailCliente) VALUES ('José','josesilva@teste.com');
+INSERT INTO tbCliente (NomeCliente, EmailCliente) VALUES ('Maria','maria123@teste.com');
+INSERT INTO tbCliente (NomeCliente, EmailCliente) VALUES ('Luis','luis89@teste.com');
+INSERT INTO tbCliente (NomeCliente, EmailCliente) VALUES ('Luiz','luizgomes@teste.com');
+INSERT INTO tbCliente (NomeCliente, EmailCliente) VALUES ('Luiza','luizaalmeida@teste.com');
+GO
+
+INSERT INTO tbVendas  VALUES 
+('01/01/2021',1),
+('01/02/2021',2),
+('01/03/2021',2),
+('02/03/2021',3),
+('01/04/2021',3),
+('02/04/2021',1);
+GO
+
+
+INSERT INTO tbItemVenda VALUES 
+(1,3,5),
+(2,1,1),
+(2,3,10),
+(3,1,5),
+(3,2,2),
+(3,3,3),
+(4,1,10),
+(4,2,5),
+(4,3,2),
+(5,1,5),
+(6,3,10),
+(6,1,1);
+GO
